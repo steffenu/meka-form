@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/meka-form/static/css/main.f9bee75a.chunk.css",
+    "main.js": "/meka-form/static/js/main.63774864.chunk.js",
+    "main.js.map": "/meka-form/static/js/main.63774864.chunk.js.map",
+    "runtime-main.js": "/meka-form/static/js/runtime-main.07d2cd54.js",
+    "runtime-main.js.map": "/meka-form/static/js/runtime-main.07d2cd54.js.map",
+    "static/js/2.73cb8f1a.chunk.js": "/meka-form/static/js/2.73cb8f1a.chunk.js",
+    "static/js/2.73cb8f1a.chunk.js.map": "/meka-form/static/js/2.73cb8f1a.chunk.js.map",
+    "index.html": "/meka-form/index.html",
+    "static/css/main.f9bee75a.chunk.css.map": "/meka-form/static/css/main.f9bee75a.chunk.css.map",
+    "static/js/2.73cb8f1a.chunk.js.LICENSE.txt": "/meka-form/static/js/2.73cb8f1a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.07d2cd54.js",
+    "static/js/2.73cb8f1a.chunk.js",
+    "static/css/main.f9bee75a.chunk.css",
+    "static/js/main.63774864.chunk.js"
+  ]
+}
