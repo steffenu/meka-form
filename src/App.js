@@ -2,9 +2,16 @@ import styled, { createGlobalStyle } from "styled-components";
 import './App.css';
 /* 
 
+Als Aufgabe ist für Sie folgendes geplant. 
+ - Erstellen Sie ein grafisch ansprechendes und responsives Webformular (in React) mit Personendaten (Name, Vorname, Geburtsdatum,…). Es soll außerdem die Möglichkeit bestehen, ein Bild hochzuladen.
+
+ 
+
+Auf dem Webformular soll ein Button „senden“ enthalten sein. Sobald dieser „geklickt“ wird, sollen die Daten validiert (z.B. Geburtsdatum darf nicht in der Zukunft liegen, Namen dürfen keine Zahlen enthalten,…) und ggf ein Hinweis (zum Beispiel als roter PopOver) mit der entsprechenden Fehlermeldung erscheinen. Anschließend sollen die Daten inkl. Bild in einer Klasse gespeichert und in einem Dialog als Labels und Bild angezeigt werden.
+
 
 /////////////////////////////////////
-1  Globaler Style + Media Queries (CSS)
+1  Globaler Style (CSS)
 ///////////////////////////////////// 
   > anstelle von import './App.css';
   > Styled Component für CSS IN CSS
@@ -13,16 +20,14 @@ import './App.css';
 2  ONCLICK HANDLER
 /////////////////////
   > onSubmit Daten Entgegenehmen
+  > <Form className="signupform" onSubmit={handleSubmit}>
 
 /////////////////////
 3  VALIDATION
 /////////////////////
-> einfache validierung mit regex
+> validierung mit regex
 
-/////////////////////
-4  MODAL
-/////////////////////
-> Zeige erstelltest Modal 
+
 
 */
 
@@ -37,42 +42,46 @@ function App() {
        <div className="form-wrapper">
    
       <Form className="signupform" onSubmit={handleSubmit}>
-        <List className="formlist">
-          <li>Platform : Meka </li>
-          <li>Program: Form</li>
-          <li>Task: Validation</li>
-        </List>
 
-
-
-        <label htmlFor="email">NAME</label>
+        <label htmlFor="name">NAME</label>
         <Input
-          id="email"
-          name="email"
-          type="email"
-          onChange={console.log("test")}  
+          id="name"
+          name="name"
+          type="name"
+           
         />
 
-        <label id="pass-label" htmlFor="password">
+        <label id="pass-label" >
           VORNAME
         </label>
         <Input
-          id="password"
-          name="password"
+          id="vorname"
+          name="vorname"
           type="text"
-          onChange={console.log("test")} 
+          
         />
 
-        <label id="conf-pass" htmlFor="confirmpassword">
+        <label id="conf-pass">
           GEBURTSDATUM
         </label>
 
         <Input
-          id="confirmpassword"
-          name="confirmpassword"
-          type="text"
-          onChange={console.log("test")}
+          id="geburt"
+          name="geburt"
+          type="date"
         />
+
+        <label id="add-file">
+          DATEI ANHANG
+        </label>
+
+        <Input
+          id="datei"
+          name="datei"
+          type="file"
+        />
+
+        
 
         <Button type="submit">Senden</Button>
       </Form>
@@ -92,7 +101,7 @@ const GlobalStyle = createGlobalStyle`
 
 
 .signupform{
-  padding-top:2rem;
+  padding-top:4rem !important;
 }
 
 .App{
@@ -186,7 +195,6 @@ const List = styled.ul`
 `;
 
 
-
 /////////////////////
 //  ONSUBMIT HANDLER
 /////////////////////
@@ -194,19 +202,78 @@ const List = styled.ul`
 // https://stackoverflow.com/a/23428536/11678858 ( with state)
 
 function handleSubmit(e) {
-  alert('A name was submitted: ' + e.target[0].value +"\n" +  e.target[1].value +"\n" + e.target[2].value );
+  let myForm = new FormData(e.target[0].value, e.target[1].value , e.target[2].value, e.target[3].value);
+
+
+
   e.preventDefault();
+
+ 
+  validation(myForm);
+
+  alert( myForm.name +"\n" +   myForm.vorname +"\n" +  myForm.geburtsdatum + "\n" +  myForm.dateipfad );
 };
 
+/////////////////////
+//  KLASSE
+/////////////////////
+// https://www.w3schools.com/js/js_classes.asp
+
+class FormData {
+  constructor(name, vorname , geburtsdatum , dateipfad) {
+    this.name = name;
+    this.vorname = vorname;
+    this.geburtsdatum = geburtsdatum;
+    this.dateipfad = dateipfad;
+  }
+}
 
 
 
 /////////////////////
 //  VALIDATION
 /////////////////////
+// 1. Keine Zahl im Namen - regex search digit
+// 2. Kein Datum in der Zukunft - geburtsdatum > 
+// 3. DateiTyp PNG / JPG
 
 
 
-/////////////////////
-//  MODAL
-/////////////////////
+// myForm = // name, vorname , geburtsdatum , dateipfad
+function validation(myForm) {
+  // DATUM HEUTE für vergleich mit Form Jahr (simplified for demo)
+  var today = new Date();
+  var yyyy = today.getFullYear();
+  console.log('yyyy:', yyyy)
+  
+
+  const re_digit = /\d/g;  // search digit
+  const re_filetype = /.png|.jpg/g;  // search .png or jpg
+
+  console.log(myForm.name.match(re_digit))
+  if (myForm.name.match(re_digit)) {
+      alert("ERROR - ZAHL IM NAMEN" );
+  }
+
+  if (myForm.vorname.match(re_digit)) {
+    alert("ERROR - ZAHL IM VORNAMEN" );
+}
+
+  if (!myForm.dateipfad.match(re_filetype)) {
+    alert("ERROR - Dateityp .jpg oder .png benötigt" );
+  }
+
+  let jahr = myForm.geburtsdatum.split("-");
+  //console.log('jahr:', jahr[0])
+
+  if (jahr[0] > yyyy ) {
+    alert("ERROR - GEBURTSDATUM in der Zukunft" );
+  }
+
+
+
+
+}
+
+
+
