@@ -257,18 +257,20 @@ function validation(myForm) {
 
   if (myForm.vorname.match(re_digit)) {
     alert("ERROR - ZAHL IM VORNAMEN" );
-}
+  }
+
+
+let jahr = myForm.geburtsdatum.split("-");
+//console.log('jahr:', jahr[0])
+
+  if (jahr[0] > yyyy ) {
+    alert("ERROR - GEBURTSDATUM in der Zukunft" );
+  }
 
   if (!myForm.dateipfad.match(re_filetype)) {
     alert("ERROR - Dateityp .jpg oder .png benötigt" );
   }
 
-  let jahr = myForm.geburtsdatum.split("-");
-  //console.log('jahr:', jahr[0])
-
-  if (jahr[0] > yyyy ) {
-    alert("ERROR - GEBURTSDATUM in der Zukunft" );
-  }
 
 
 
